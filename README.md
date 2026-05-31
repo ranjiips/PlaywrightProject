@@ -209,4 +209,88 @@ npx playwright test --browser=firefox
 - Expand **test data** with Excel/CSV.
 - Integrate with **CI/CD pipelines**.
 - Add **API utilities** for REST validation.
+============================================
 
+# PlaywrightProject
+
+A collection of Playwright automation projects maintained under a single repository with its own configuration, tests, and utilities.
+
+---
+
+## 📂 Repository Structure
+```
+PlaywrightProject/
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ranjiips/PlaywrightProject.git
+cd PlaywrightProject
+```
+
+### 2. Navigate to a Sub‑Project
+Example for warehouse:
+```bash
+npm install
+```
+
+### 3. Run Tests
+```bash
+npx playwright test
+```
+
+---
+
+## 🔀 Branching Workflow Guide
+
+This repository uses **branch protection rules** to keep `main` clean and stable.  
+No one can push directly to `main`. All changes must go through a **Pull Request (PR)**.
+
+### 👨‍💻 Workflow for Collaborators
+1. **Create a new branch** from `main`:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b dev/<feature-name>
+   ```
+   Example:  
+   ```bash
+   git checkout -b dev/inbound-flow
+   ```
+
+2. **Make changes** and commit:
+   ```bash
+   git add .
+   git commit -m "Add inbound flow test"
+   ```
+
+3. **Push your branch**:
+   ```bash
+   git push origin dev/inbound-flow
+   ```
+
+4. **Open a Pull Request** on GitHub:
+   - Base branch: `main`
+   - Compare branch: `dev/inbound-flow`
+
+5. **Get at least 1 approval** before merging.  
+   - Reviews are mandatory.  
+   - All review comments must be resolved.  
+
+---
+
+### 📂 Branch Naming Convention
+- `dev/<feature>` → new features (e.g., `dev/login-flow`)  
+- `bugfix/<issue>` → bug fixes (e.g., `bugfix/db-connection`)  
+- `hotfix/<urgent>` → urgent fixes (e.g., `hotfix/security-patch`)  
+
+---
+
+## ✅ Best Practices
+- Keep commits small and descriptive.  
+- Always pull the latest `main` before starting new work.  
+- Use PR descriptions to explain **what changed** and **how to test**.  
