@@ -184,8 +184,12 @@ test('Inbound flow validation', async ({ page }) => {
 ```bash
 npx playwright test
 npx playwright test --headed --browser=chromium
+npx playwright test src/tests/login.spec.ts --headed
 ```
-
+## To open last HTML report run:
+```bash
+  npx playwright show-report reports
+```
 - Reports → `reports/index.html`  
 - Default browser → Chrome (Chromium)  
 - To run in Firefox/WebKit:
