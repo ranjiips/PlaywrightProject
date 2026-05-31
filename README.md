@@ -178,7 +178,6 @@ test('Inbound flow validation', async ({ page }) => {
   expect(rows.length).toBeGreaterThan(0);
 });
 ```
-
 ---
 
 ## ▶️ Running Tests
