@@ -5,7 +5,11 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "types": ["node", "playwright"],
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src"]
 }
