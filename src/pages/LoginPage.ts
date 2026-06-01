@@ -1,6 +1,8 @@
 import { Page, expect, test } from '@playwright/test';
 import { config } from '../config/config';
 import { selectors } from '../utils/selectors';
+import { decrypt } from '../utils/cryptoUtils';
+
 
 export class LoginPage {
   constructor(private page: Page) {}
@@ -16,10 +18,10 @@ export class LoginPage {
       .toHaveText('Sign in to your account', { timeout: config.validationTimeout });
   }
 
-  async login() {
-  await this.page.fill(selectors.login.usernameInput, config.username);
-  await this.page.fill(selectors.login.passwordInput, config.password);
-  await this.page.click(selectors.login.signInButton);
+  async login(username: string, password: string) {
+    await this.page.fill(selectors.login.usernameInput, username);
+    await this.page.fill(selectors.login.passwordInput, password);
+    await this.page.click(selectors.login.signInButton);
 
   // Spinner cycle
   await this.page.locator(selectors.spinner.container).waitFor({ state: 'visible', timeout: config.spinnerTimeout });
