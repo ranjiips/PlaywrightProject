@@ -6,7 +6,7 @@ export default defineConfig({
   testDir: './src/tests',
 
   // Disable test timeout (no cap on test duration)
-  timeout: 0,
+  timeout: 300000, // 5 minutes per test
 
   use: {
     browserName: 'chromium',   // Chrome

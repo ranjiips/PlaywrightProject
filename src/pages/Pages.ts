@@ -7,6 +7,7 @@ import { ForkIdentifierPage } from './ForkIdentifierPage';
 import { KorberMainMenuPage } from './KorberMainMenuPage';
 import { KorberInvControlPage } from './KorberInvControlPage';
 import { KorberInventoryAdjustPage } from './KorberInventoryAdjustPage';
+import { KorberHelper } from '../utils/korberHelper';
 
 export class Pages {
   loginPage: LoginPage;
@@ -17,6 +18,7 @@ export class Pages {
   korberMainMenuPage: KorberMainMenuPage;
   korberInvControlPage: KorberInvControlPage;
   korberInventoryAdjustPage: KorberInventoryAdjustPage;
+  korberHelper: KorberHelper;
 
   constructor(page: Page) {
     this.loginPage = new LoginPage(page);
@@ -27,5 +29,6 @@ export class Pages {
     this.korberMainMenuPage = new KorberMainMenuPage(page);
     this.korberInvControlPage = new KorberInvControlPage(page);
     this.korberInventoryAdjustPage = new KorberInventoryAdjustPage(page);
+    this.korberHelper = new KorberHelper(page);
   }
 }

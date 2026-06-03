@@ -1,60 +1,63 @@
 import { Page } from '@playwright/test';
+import { KorberHelper } from '../utils/korberHelper';
+import { selectors } from '../utils/selectors';
 
 export class KorberInventoryAdjustPage {
-  constructor(private page: Page) {}
+  private helper: KorberHelper;
 
-  async verifyInventoryAdjustScreen() {
-    await this.page.waitForSelector('span:text("Inventory Adjustment")');
-    console.log('Inventory Adjustment screen loaded successfully.');
+  constructor(private page: Page) {
+    this.helper = new KorberHelper(page);
   }
 
   async enterLocationOrLP(value: string) {
-    await this.page.fill('input.k-textbox', value);
-    await this.page.click('button.k-button:has-text("Submit")');
-    console.log(`Entered ${value} and submitted (Location/LP/MLP).`);
+    await this.helper.verifyScreenByPrompt('ANY VALUE');
+    await this.page.locator(selectors.korber.textInput).fill(value);
+    await this.page.locator(selectors.korber.submitBtn).click();
+    console.log(`LPN entered: ${value}`);
+    await this.helper.verifyScreenByPrompt('ITEM ID');
   }
 
   async enterItemId(itemId: string) {
-    await this.page.waitForSelector('span:text("ITEM ID")');
-    await this.page.fill('input.k-textbox', itemId);
-    await this.page.click('button.k-button:has-text("Submit")');
-    console.log(`Entered Item ID ${itemId} and submitted.`);
+    await this.page.locator(selectors.korber.textInput).fill(itemId);
+    await this.page.locator(selectors.korber.submitBtn).click();
+    console.log(`Item ID entered: ${itemId}`);
+    await this.helper.verifyScreenByParagraph('Select Adjustment Type');
   }
 
-  async selectAdjustmentType(type: 'INCREMENT' | 'DECREMENT' | 'UPDATE QTY') {
-    await this.page.waitForSelector(`div.noselect:text("${type}")`);
-    await this.page.click(`div.noselect:text("${type}")`);
-    console.log(`Selected Adjustment Type: ${type}`);
+  async selectAdjustmentType(type: string) {
+    await this.helper.clickMenuTile(
+      type,
+      selectors.korber.screenPrompt('EA')
+    );
   }
 
   async enterQuantity(qty: string) {
-    await this.page.waitForSelector('span:text("EA")');
-    await this.page.fill('input.k-textbox', qty);
-    await this.page.click('button.k-button:has-text("Submit")');
-    console.log(`Entered quantity ${qty} and submitted.`);
+    await this.page.locator(selectors.korber.textInput).fill(qty);
+    await this.page.locator(selectors.korber.submitBtn).click();
+    console.log(`Quantity entered: ${qty}`);
+    await this.helper.verifyScreenByPrompt('REASON CODE');
   }
 
-    async openReasonCodeList() {
-    await this.page.click('div.functionKey:has-text("LST")');
-    console.log('Opened Reason Code list using LST function key.');
+  async clickLSTButton() {
+    await this.helper.clickFunctionKey('LST');
+    await this.helper.verifyScreenByHeading('INCREMENT');
+    await this.page.waitForSelector(
+      selectors.korber.menuTile('DA DEMO'),
+      { timeout: 30000 }
+    );
+    console.log('Reason code list loaded');
   }
 
-  async selectReasonCode(reason: string) {
-    await this.page.waitForSelector(`div.noselect:text("${reason}")`);
-    await this.page.click(`div.noselect:text("${reason}")`);
-    console.log(`Selected Reason Code: ${reason}`);
+  async selectReasonCode(reasonCode: string) {
+    await this.helper.clickMenuTile(
+      reasonCode,
+      selectors.korber.screenPrompt('ENTER:Confirm')
+    );
   }
 
-//   async submitReasonCode() {
-//     await this.page.click('button.k-button:has-text("Submit")');
-//     console.log('Submitted Reason Code.');
-//   }
-
-    async confirmTransaction() {
-    await this.page.waitForSelector('span:text("ENTER:Confirm")');
-    await this.page.click('button.k-button:has-text("Submit")');
-    console.log('Transaction confirmed and completed.');
+  async confirmTransaction() {
+    await this.helper.verifyScreenByPrompt('ENTER:Confirm');
+    await this.page.locator(selectors.korber.submitBtn).click();
+    console.log('Transaction confirmed');
   }
-
-
 }
