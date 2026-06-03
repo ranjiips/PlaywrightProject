@@ -1,19 +1,22 @@
 import { Page } from '@playwright/test';
+import { KorberHelper } from '../utils/korberHelper';
+import { selectors } from '../utils/selectors';
 
 export class KorberInvControlPage {
-  constructor(private page: Page) {}
+  private helper: KorberHelper;
 
-  async verifyInvControlMenu() {
-    await this.page.waitForSelector('div.noselect:text("Inventory Adjust")');
-    console.log('Inv Control submenu loaded successfully.');
+  constructor(private page: Page) {
+    this.helper = new KorberHelper(page);
   }
 
-    /**
-   * Generic method to click any Inv Control submenu option
-   * @param optionName - The visible text of the submenu option (e.g. "Inventory Adjust")
-   */
-  async clickOption(optionName: string) {
-    await this.page.click(`div.noselect:text("${optionName}")`);
-    console.log(`Navigated to ${optionName}.`);
+  async verifyInvControlMenu() {
+    await this.helper.verifyScreenByHeading('Inv Control');
+  }
+
+  async clickInventoryAdjust() {
+    await this.helper.clickMenuTile(
+      'Inventory Adjust',
+      selectors.korber.screenPrompt('ANY VALUE')
+    );
   }
 }

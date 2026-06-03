@@ -1,8 +1,6 @@
 import { Page, expect, test } from '@playwright/test';
 import { config } from '../config/config';
 import { selectors } from '../utils/selectors';
-import { decrypt } from '../utils/cryptoUtils';
-
 
 export class LoginPage {
   constructor(private page: Page) {}
@@ -23,23 +21,24 @@ export class LoginPage {
     await this.page.fill(selectors.login.passwordInput, password);
     await this.page.click(selectors.login.signInButton);
 
-  // Spinner cycle
-  await this.page.locator(selectors.spinner.container).waitFor({ state: 'visible', timeout: config.spinnerTimeout });
-  await this.page.locator(selectors.spinner.container).waitFor({ state: 'hidden', timeout: config.spinnerTimeout });
+    // Spinner cycle
+    await this.page.locator(selectors.spinner.container)
+      .waitFor({ state: 'visible', timeout: config.spinnerTimeout });
+    await this.page.locator(selectors.spinner.container)
+      .waitFor({ state: 'hidden', timeout: config.spinnerTimeout });
 
-//   // Second spinner cycle
-//   await this.page.locator(selectors.spinner.container).waitFor({ state: 'visible', timeout: config.spinnerTimeout });
-//   await this.page.locator(selectors.spinner.container).waitFor({ state: 'hidden', timeout: config.spinnerTimeout });
+    // Loading screen lifecycle
+    await this.page.locator(selectors.loadingScreen.container)
+      .waitFor({ state: 'visible', timeout: config.loadingTimeout });
+    await expect(this.page.locator(selectors.loadingScreen.appLoadedItems))
+      .toHaveCount(8, { timeout: config.loadingTimeout });
+    await this.page.locator(selectors.loadingScreen.container)
+      .waitFor({ state: 'hidden', timeout: config.loadingTimeout });
 
-  // Loading screen lifecycle
-  await this.page.locator(selectors.loadingScreen.container).waitFor({ state: 'visible', timeout: config.loadingTimeout });
-  await expect(this.page.locator(selectors.loadingScreen.appLoadedItems))
-    .toHaveCount(8, { timeout: config.loadingTimeout });
-  await this.page.locator(selectors.loadingScreen.container).waitFor({ state: 'hidden', timeout: config.loadingTimeout });
-
-  // Dashboard ready
-  await this.page.locator(selectors.dashboard.logo).waitFor({ state: 'visible', timeout: config.validationTimeout });
-}
+    // Dashboard ready
+    await this.page.locator(selectors.dashboard.logo)
+      .waitFor({ state: 'visible', timeout: config.validationTimeout });
+  }
 
   async captureLoginScreenshot() {
     const screenshot = await this.page.screenshot({ fullPage: true });
