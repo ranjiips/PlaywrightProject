@@ -1,8 +1,8 @@
 export const config = {
   baseURL: 'https://odwlogistics.usetest.koerbercloud.com/core/Default.html',
-  username: '',
-  password: '',
-  accountName: '',
+  username: 'AshwiniB',
+  password: 'Hjspass#1',
+  accountName: 'Ashwini Biradar',
   browser: 'chromium', // can be 'chromium', 'firefox', or 'webkit'
   environment: 'test',  // e.g., 'dev', 'test', 'prod'
 
